@@ -1,3 +1,32 @@
+var dateConvert = {
+    formattedDate: '',
+    formatDateForDb: function (date) {
+        var newDate = new Date(date);
+        var day = newDate.getDate();
+        var month = newDate.getMonth() + 1;
+        var hours = newDate.getHours();
+        var minutes = newDate.getMinutes();
+        var seconds = newDate.getSeconds();
+        if (newDate.getHours().toString().length < 2)
+            hours = "0" + hours;
+
+        if (newDate.getMinutes().toString().length < 2)
+            minutes = "0" + minutes;
+
+        if (newDate.getSeconds().toString().length < 2)
+            seconds = "0" + seconds;
+
+        if (month.toString().length < 2)
+            month = "0" + month;
+
+        if (day.toString().length != 2) {
+            day = '0' + day;
+        }
+        this.formattedDate = newDate.getFullYear() + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
+        return this.formattedDate;
+    },
+}
+
 var ChatApp2 = window.React.createClass({
     getInitialState:function(){
         return {
@@ -16,9 +45,24 @@ var ChatApp2 = window.React.createClass({
     render: function(){
         var self = this;
         var messages = self.state.messages.map(function(msg){
-            console.log(msg);
+            //console.log(msg);
             var log = JSON.parse(msg);
-            var message =  log.name + " | " + log.msg + " | " + log.time;
+            var message = '';
+            var datetime = dateConvert.formatDateForDb(log.time);
+            if (log.user){
+                //message = log.name + " | " + log[0].user + " | " + log[0].date + " | " + log[0].function + " | " + log[0].sql + " | " + log[0].runtime;
+                message = log.name + " | User ID: " + log.user + " | Date: " + log.date + " | Function: " + log.function + " | SQL: " + log.sql + " | Runtime: " + log.runtime;
+            } else {
+                if (log.msg == ''){
+                    if (log.function){
+                        message = log.name + " | " + log.function + " | " + datetime;
+                    } else
+                    message = log.name + " | " + log.msg + " | " + datetime;
+                } else
+                message = log.name + " | " + log.msg + " | " + datetime;
+
+            }
+
             return <li>{message}</li>
         });
         return(
@@ -51,7 +95,18 @@ var ChatApp3 = window.React.createClass({
         var self = this;
         var messages = self.state.messages.map(function(msg){
             var log = JSON.parse(msg)
-            var message = log.msg
+            //var message = log.msg
+            var message = '';
+            if (log.user){
+                //message = log.name + " | " + log[0].user + " | " + log[0].date + " | " + log[0].function + " | " + log[0].sql + " | " + log[0].runtime;
+                message = log.name + " | User ID: " + log.user + " | Date: " + log.date + " | Error: " + log.error + " | Function: " + log.function + " | SQL: " + log.sql + " | Parameters: " + log.params;
+            } else {
+                if (log.function){
+                    message = log.name + " | Date: " + log.date + " | Error: " + log.error + " | Function: " + log.function + " | SQL: " + log.sql + " | Parameters: " + log.params;
+                } else
+                message = log.msg
+            }
+
             return <li>{message}</li>
         });
         return(
@@ -83,7 +138,16 @@ var ChatApp4 = window.React.createClass({
         var self = this;
         var messages = self.state.messages.map(function(msg){
             var log = JSON.parse(msg)
-            var message = log.msg
+            var message = '';
+
+            if (log.msg == ''){
+                if (log.function){
+                message = log.function;
+                } else
+                message = '';
+            } else
+                message = log.msg;
+
             return <li>{message}</li>
         });
         return(
