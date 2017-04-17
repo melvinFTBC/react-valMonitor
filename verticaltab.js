@@ -45,23 +45,22 @@ var ChatApp2 = window.React.createClass({
     render: function(){
         var self = this;
         var messages = self.state.messages.map(function(msg){
-            //console.log(msg);
+
             var log = JSON.parse(msg);
             var message = '';
-            var datetime = dateConvert.formatDateForDb(log.time);
-            if (log.user){
-                //message = log.name + " | " + log[0].user + " | " + log[0].date + " | " + log[0].function + " | " + log[0].sql + " | " + log[0].runtime;
-                message = log.name + " | User ID: " + log.user + " | Date: " + log.date + " | Function: " + log.function + " | SQL: " + log.sql + " | Runtime: " + log.runtime;
-            } else {
-                if (log.msg == ''){
-                    if (log.function){
-                        message = log.name + " | " + log.function + " | " + datetime;
-                    } else
-                    message = log.name + " | " + log.msg + " | " + datetime;
-                } else
-                message = log.name + " | " + log.msg + " | " + datetime;
 
-            }
+            if (log.msg == ''){
+                if (log.function){
+                    message = log.function;
+                } else {
+                    if (log.job_name){
+                        message = log.job_name;
+                    } else
+                        message = '';
+                }
+            } else
+                message = log.msg;
+
 
             return <li>{message}</li>
         });
@@ -140,19 +139,19 @@ var ChatApp4 = window.React.createClass({
             var log = JSON.parse(msg)
             var message = '';
 
-            if (log.msg == ''){
-                if (log.function){
-                message = log.function;
-                } else {
-                    if (log.job_name){
-                        message = log.job_name;
+            var datetime = dateConvert.formatDateForDb(log.time);
+            if (log.user){
+                //message = log.name + " | " + log[0].user + " | " + log[0].date + " | " + log[0].function + " | " + log[0].sql + " | " + log[0].runtime;
+                message = log.name + " | User ID: " + log.user + " | Date: " + log.date + " | Function: " + log.function + " | SQL: " + log.sql + " | Runtime: " + log.runtime;
+            } else {
+                if (log.msg == ''){
+                    if (log.function){
+                        message = log.name + " | " + log.function + " | " + datetime;
                     } else
-                    message = '';
-                }
-
-            } else
-                message = log.msg;
-
+                        message = log.name + " | " + log.msg + " | " + datetime;
+                } else
+                    message = log.name + " | " + log.msg + " | " + datetime;
+            }
             return <li>{message}</li>
         });
         return(
