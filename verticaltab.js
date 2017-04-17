@@ -50,14 +50,17 @@ var ChatApp2 = window.React.createClass({
             var message = '';
 
             if (log.msg == ''){
-                if (log.function){
-                    message = log.function;
-                } else {
-                    if (log.job_name){
-                        message = log.job_name;
-                    } else
-                        message = '';
-                }
+                if (log.message == ''){
+                    if (log.function){
+                        message = log.function;
+                    } else {
+                        if (log.job_name){
+                            message = log.job_name;
+                        } else
+                            message = '';
+                    }
+                } else
+                    message = log.message;
             } else
                 message = log.msg;
 
