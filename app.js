@@ -37,3 +37,5 @@ io.on('connection', function(socket){
 http.listen('3000',function(){
     console.log("we are connected");
 });
+
+//http://localhost:63342/react-valMonitor/index.html
