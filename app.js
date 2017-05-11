@@ -1,5 +1,17 @@
-var express = require('express');
-var app = express();
+var express = require('express')
+var app = express()
+app.set('view engine', 'html');
+var path = require('path');
+
+
+
+app.use('/build', express.static(__dirname + '/build/'));
+app.use('/public', express.static(__dirname + '/public/'));
+app.get('/', function (req, res) {
+    console.log(path.join(__dirname, 'views/index'))
+    res.sendFile(path.join(__dirname, 'views/index.html'))
+})
+
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var redis = require('redis');
@@ -8,9 +20,10 @@ var infoSubscribe = redis.createClient();
 
 
 io.on('connection', function(socket){
-  console.log("we have a connection");
+    console.log("we have a connection");
 
     infoSubscribe.subscribe('infolog');
+
     infoSubscribe.on("message", function(channel, msg) {
         io.emit("infolog-message",msg);
     });
@@ -25,17 +38,15 @@ io.on('connection', function(socket){
         io.emit("debuglog-message",msg);
     });
 
-  socket.on("new-message", function(msg){
-      console.log(msg);
-      io.emit("receive-message",msg);
-  })
-  socket.on("test", function(){
+    socket.on("new-message", function(msg){
+        console.log(msg);
+        io.emit("receive-message",msg);
+    })
+    socket.on("test", function(){
         console.log("mounted");
-  })
+    })
 });
 
 http.listen('3000',function(){
     console.log("we are connected");
 });
-
-//http://localhost:63342/react-valMonitor/index.html
