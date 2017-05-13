@@ -31,7 +31,7 @@ var ChatApp2 = window.React.createClass({
     getInitialState:function(){
         return {
             messages: [],
-            socket: window.io('http://localhost:3000')
+            socket:  io()
         }
     },
     componentDidMount: function(){
@@ -85,7 +85,7 @@ var ChatApp3 = window.React.createClass({
     getInitialState:function(){
         return {
             messages: [],
-            socket: window.io('http://localhost:3000')
+            socket:  io()
         }
     },
     componentDidMount: function(){
@@ -101,6 +101,7 @@ var ChatApp3 = window.React.createClass({
         var prev = ''
         var messages = self.state.messages.map(function(msg){
             if(msg != prev) {
+
                 var log = JSON.parse(msg)
                 //var message = log.msg
                 var message = '';
@@ -132,7 +133,7 @@ var ChatApp4 = window.React.createClass({
     getInitialState:function(){
         return {
             messages: [],
-            socket: window.io('http://localhost:3000')
+            socket:  io()
         }
     },
     componentDidMount: function(){
