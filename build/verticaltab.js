@@ -54,10 +54,10 @@ var ChatApp2 = window.React.createClass({
                 if (log.msg == ''){
                     if (log.message == ''){
                         if (log.function){
-                            message = log.function;
+                            message = log.date + " -> " + log.function;
                         } else {
                             if (log.job_name){
-                                message = log.job_name;
+                                message = log.date + " -> " + log.job_name;
                             } else
                                 message = '';
                         }
@@ -106,12 +106,12 @@ var ChatApp3 = window.React.createClass({
                 var message = '';
                 if (log.user) {
                     //message = log.name + " | " + log[0].user + " | " + log[0].date + " | " + log[0].function + " | " + log[0].sql + " | " + log[0].runtime;
-                    message = log.name + " | User ID: " + log.user + " | Date: " + log.date + " | Error: " + log.error + " | Function: " + log.function + " | SQL: " + log.sql + " | Parameters: " + log.params;
+                    message = log.date + " -> User_ID: " + log.user + " | Title: " + log.name + " | Error: " + log.error + " | Function: " + log.function + " | Parameters: " + log.params + " | SQL: " + log.sql;
                 } else {
                     if (log.function) {
-                        message = log.name + " | Date: " + log.date + " | Error: " + log.error + " | Function: " + log.function + " | SQL: " + log.sql + " | Parameters: " + log.params;
+                        message = log.date + " -> Title: " + log.name + " | Error: " + log.error + " | Function: " + log.function + " | Parameters: " + log.params + " | SQL: " + log.sql;
                     } else
-                        message = log.msg
+                        message = log.date + " -> " + log.msg
                 }
 
                 prev = msg
@@ -155,15 +155,15 @@ var ChatApp4 = window.React.createClass({
                 var datetime = dateConvert.formatDateForDb(log.time);
                 if (log.user){
                     //message = log.name + " | " + log[0].user + " | " + log[0].date + " | " + log[0].function + " | " + log[0].sql + " | " + log[0].runtime;
-                    message = log.name + " | User ID: " + log.user + " | Date: " + log.date + " | Function: " + log.function + " | SQL: " + log.sql + " | Runtime: " + log.runtime;
+                    message = log.date + " -> User_ID: " + log.user + " | Title: " + log.name + " | Function: " + log.function + " | Runtime: " + log.runtime + " | SQL: " + log.sql;
                 } else {
                     if (log.msg == ''){
                         if (log.function){
-                            message = log.name + " | " + log.function + " | " + datetime;
+                            message = datetime + " -> Title: " + log.name + " | Function: " + log.function;
                         } else
-                            message = log.name + " | " + log.msg + " | " + datetime;
+                            message = datetime + " -> Title: " + log.name + " | Msg: " + log.msg;
                     } else
-                        message = log.name + " | " + log.msg + " | " + datetime;
+                        message = datetime + " -> Title: " + log.name + " | Msg: " + log.msg;
                 }
                 prev = msg;
                 return <li>{message}</li>
