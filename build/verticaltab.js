@@ -31,7 +31,7 @@ var ChatApp2 = window.React.createClass({
     getInitialState:function(){
         return {
             messages: [],
-            socket: window.io('172.31.31.83:3000')
+            socket: window.io('http://ec2-13-228-23-4.ap-southeast-1.compute.amazonaws.com:3000')
         }
     },
     componentDidMount: function(){
@@ -85,7 +85,7 @@ var ChatApp3 = window.React.createClass({
     getInitialState:function(){
         return {
             messages: [],
-            socket: window.io('172.31.31.83:3000')
+            socket: window.io('http://ec2-13-228-23-4.ap-southeast-1.compute.amazonaws.com:3000')
         }
     },
     componentDidMount: function(){
@@ -132,7 +132,7 @@ var ChatApp4 = window.React.createClass({
     getInitialState:function(){
         return {
             messages: [],
-            socket: window.io('172.31.31.83:3000')
+            socket: window.io('http://ec2-13-228-23-4.ap-southeast-1.compute.amazonaws.com:3000')
         }
     },
     componentDidMount: function(){
